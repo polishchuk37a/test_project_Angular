@@ -8,14 +8,15 @@ import {HEROES} from '../../mock-heroes';
   styleUrls: ['./heroes.component.css']
 })
 export class HeroesComponent implements OnInit {
-  heroes = HEROES;
-  selectedHero?: Hero;
+
+  heroes = HEROES;//создаём переменную и присваиваем ей фиктивных героев из mock-heroes.ts
+  selectedHero?: Hero; //создаём переменную selectedHero, но не присваиваем ей значение, чтобы при запуске браузера не отображался герой
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
+  //по нажатию на героя перемнной selectedHero присваивается выбраный герой
   onSelect(hero: Hero): void {
     this.selectedHero = hero;
   }
