@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero } from '../../hero';
-import {HEROES} from '../../mock-heroes';
+
+import {HeroService} from "../../hero.service";
+import { MessageService} from "../../message.service";
 
 @Component({
   selector: 'app-heroes',
@@ -9,15 +11,23 @@ import {HEROES} from '../../mock-heroes';
 })
 export class HeroesComponent implements OnInit {
 
-  heroes = HEROES;//создаём переменную и присваиваем ей фиктивных героев из mock-heroes.ts
-  selectedHero?: Hero; //создаём переменную selectedHero, но не присваиваем ей значение, чтобы при запуске браузера не отображался герой
+  selectedHero?: Hero;
 
-  constructor() { }
+  heroes: Hero[] = [];
 
-  ngOnInit(): void {}
+  constructor(private heroService: HeroService, private messageService: MessageService) { }
 
-  //по нажатию на героя перемнной selectedHero присваивается выбраный герой
+  ngOnInit() {
+    this.getHeroes();
+  }
+
   onSelect(hero: Hero): void {
     this.selectedHero = hero;
+    this.messageService.add(`HeroesComponent: Selected hero id=${hero.id}`);
+  }
+
+  getHeroes(): void {
+    this.heroService.getHeroes()
+      .subscribe(heroes => this.heroes = heroes);
   }
 }
